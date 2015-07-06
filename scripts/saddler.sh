@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+echo "********************"
+echo "* install gems     *"
+echo "********************"
 gem install --no-document checkstyle_filter-git saddler saddler-reporter-github findbugs_translate_checkstyle_format android_lint_translate_checkstyle_format
 
 if [ $? -ne 0 ]; then
@@ -7,6 +10,9 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+echo "********************"
+echo "* exec gradle      *"
+echo "********************"
 ./gradlew check
 
 if [ $? -ne 0 ]; then
@@ -14,8 +20,9 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "\n"
-echo "save outputs.\n"
+echo "********************"
+echo "* save outputs     *"
+echo "********************"
 
 LINT_RESULT_DIR="$CIRCLE_ARTIFACTS/lint"
 
@@ -29,21 +36,24 @@ if [ -z "${CI_PULL_REQUEST}" ]; then
     exit 0
 fi
 
-echo "\n"
-echo "checkstyle\n"
+echo "********************"
+echo "* checkstyle       *"
+echo "********************"
 cat app/build/reports/checkstyle/checkstyle.xml \
     | checkstyle_filter-git diff origin/master \
     | saddler report --require saddler/reporter/github --reporter Saddler::Reporter::Github::PullRequestReviewComment
 
-echo "\n"
-echo "findbugs\n"
+echo "********************"
+echo "* findbugs         *"
+echo "********************"
 cat app/build/reports/findbugs/findbugs.xml \
     | findbugs_translate_checkstyle_format translate \
     | checkstyle_filter-git diff origin/master \
     | saddler report --require saddler/reporter/github --reporter Saddler::Reporter::Github::PullRequestReviewComment
 
-echo "\n"
-echo "android lint\n"
+echo "********************"
+echo "* android lint     *"
+echo "********************"
 cat app/build/outputs/lint-results.xml \
     | android_lint_translate_checkstyle_format translate \
     | checkstyle_filter-git diff origin/master \
