@@ -7,7 +7,8 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean HOGE;
+    private boolean FOO;
+    private boolean BAR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

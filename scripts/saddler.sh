@@ -3,7 +3,7 @@
 echo "********************"
 echo "* install gems     *"
 echo "********************"
-gem install --no-document checkstyle_filter-git saddler saddler-reporter-github findbugs_translate_checkstyle_format android_lint_translate_checkstyle_format
+gem install --no-document checkstyle_filter-git saddler saddler-reporter-github findbugs_translate_checkstyle_format android_lint_translate_checkstyle_format pmd_translate_checkstyle_format
 
 if [ $? -ne 0 ]; then
     echo 'Failed to install gems.'
@@ -13,7 +13,7 @@ fi
 echo "********************"
 echo "* exec gradle      *"
 echo "********************"
-./gradlew check
+./gradlew app:check
 
 if [ $? -ne 0 ]; then
     echo 'Failed gradle check task.'
@@ -50,6 +50,14 @@ echo "* findbugs         *"
 echo "********************"
 cat app/build/reports/findbugs/findbugs.xml \
     | findbugs_translate_checkstyle_format translate \
+    | checkstyle_filter-git diff origin/master \
+    | saddler report --require saddler/reporter/github --reporter $REPORTER
+
+echo "********************"
+echo "* PMD              *"
+echo "********************"
+cat app/build/reports/pmd/pmd.xml \
+    | pmd_translate_checkstyle_format translate \
     | checkstyle_filter-git diff origin/master \
     | saddler report --require saddler/reporter/github --reporter $REPORTER
 
