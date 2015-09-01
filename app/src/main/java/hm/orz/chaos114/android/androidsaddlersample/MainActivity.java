@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean FOO;
+    private boolean mFoo;
     private boolean BAR;
 
     @Override
