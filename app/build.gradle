@@ -24,4 +24,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
 }
 
-apply from: "https://raw.githubusercontent.com/monstar-lab/gradle-android-ci-check/1.0.0/ci.gradle"
+apply from: "https://raw.githubusercontent.com/monstar-lab/gradle-android-ci-check/1.1.0/ci.gradle"
