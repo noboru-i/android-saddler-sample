@@ -24,4 +24,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
 }
 
-apply from: "https://raw.githubusercontent.com/noboru-i/gradle-android-ci-check/add-cpd-test/ci.gradle"
+apply from: "https://raw.githubusercontent.com/monstar-lab/gradle-android-ci-check/1.1.0/ci.gradle"
