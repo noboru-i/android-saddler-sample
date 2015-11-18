@@ -2,9 +2,6 @@ machine:
   java:
     version: oraclejdk8
   timezone: Asia/Tokyo
-dependencies:
-  pre:
-    - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.2,extra-google-m2repository"
 test:
   override:
     - scripts/saddler.sh
